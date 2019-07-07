@@ -10,17 +10,17 @@ var $ = jQuery.noConflict(),
 
     // adPrime form
     adPrimeForm: function() {
-      var form = $('#ai-form');
-      var alert = $('#ai-alert');
-      var submit = $('#ai-submit');
-      var reset = $('#ai-reset');
-      var inputs = document.querySelectorAll('.inputfile');
-      var lead = $('.ai-lead');
-      var objectList = [];
-      var mailToList = [];
-      var karim = $('.email-karim');
-      var relka = $('.email-relka');
-      var sofia = $('.email-sofia');
+      var form = $('#ai-form'),
+        alert = $('#ai-alert'),
+        submit = $('#ai-submit'),
+        reset = $('#ai-reset'),
+        inputs = document.querySelectorAll('.inputfile'),
+        lead = $('.ai-lead'),
+        objectList = [],
+        mailToList = [],
+        karim = $('.email-karim'),
+        relka = $('.email-relka'),
+        sofia = $('.email-sofia');
 
       var ai_news = $('#ai_news'),
         ai_promotions = $('input#ai_promotions'),
