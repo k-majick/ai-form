@@ -1,0 +1,101 @@
+@import "./_variables.scss";
+/* grid */
+@mixin mk-container($gutter: $grid-gutter-width) {
+  @include mobile {
+    width: 100%;
+  }
+  @include tablet {
+    width: 100%;
+  }
+  @include desktop {
+    width: 1170px;
+  }
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+  padding-left: 15px;
+  padding-right: 15px;
+  @include clearfix;
+}
+/* media */
+@mixin mobile {
+  @media (max-width: $mobile-max) {
+    @content;
+  }
+}
+@mixin tablet {
+  @media (min-width: $tablet-min) and (max-width: $tablet-max) {
+    @content;
+  }
+}
+@mixin desktop {
+  @media (min-width: $desktop-min) {
+    @content;
+  }
+}
+@mixin clearfix() {
+  &::after {
+    display: block;
+    content: "";
+    clear: both;
+  }
+}
+/* bem */
+@mixin element($name) {
+  @at-root #{&}__#{$name} {
+    @content;
+  }
+}
+@mixin modifier($name) {
+  @at-root #{&}--#{$name} {
+    @content;
+  }
+}
+@mixin trans {
+  transition: all 0.3s;
+}
+@mixin btn {
+  border-radius: 0;
+  width: 150px;
+  color: $color-white;
+  font-size: 16px;
+
+  &:active,
+  &:active:focus {
+    border-color: #f7f7f7 !important;
+    background: #f7f7f7 !important;
+    color: black !important;
+    box-shadow: 0 0 10px 0 rgba(255, 255, 255, 0.5);
+  }
+
+  &:focus,
+  &:hover {
+    box-shadow: none !important;
+  }
+}
+@mixin btn-warning {
+  @include btn;
+  background: transparent;
+  border-color: white;
+
+  &:focus,
+  &:hover {
+    color: $color-white;
+    background: #a7a7a7;
+    border: 1px white solid;
+    outline: 0;
+  }
+}
+@mixin btn-primary {
+  @include btn;
+  background: transparent;
+  border-color: white;
+
+  &:focus,
+  &:hover {
+    color: $color-white;
+    background: #132b9f;
+    border: 1px white solid;
+    outline: 0;
+  }
+}

@@ -1,0 +1,10 @@
+CREATE TABLE table_name (
+    id int AUTO_INCREMENT PRIMARY KEY,
+    object_name varchar(30),
+    vendor_email varchar(30),
+    post_title varchar(150),
+    post_content text,
+    date_from varchar(30),
+    date_to varchar(30),
+    time_stamp timestamp
+);
