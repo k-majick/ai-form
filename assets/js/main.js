@@ -16,18 +16,30 @@ var $ = jQuery.noConflict(),
         reset = $('#ai-reset'),
         inputs = document.querySelectorAll('.inputfile'),
         lead = $('.ai-lead'),
+        content = $('.ai-content'),
+        upload = $('.ai-upload'),
+        pdf = $('.ai-uploadPdf'),
+        title = $('.ai-title'),
+        isRecruitment = false,
         objectList = [],
         mailToList = [],
-        maciek = $('.email-maciek'),
-        sofia = $('.email-sofia'),
-        alfa = $('.email-alfa'),
-        karolinka = $('.email-karolinka'),
-        platan = $('.email-platan'),
-        pogoria = $('.email-pogoria'),
-        fmpt = $('.email-fmpt'),
-        fmzg = $('.email-fmzg'),
-        tomaszow = $('.email-tomaszow'),
-        wolomin = $('.email-wolomin');
+        email_maciek = $('.email-maciek'),
+        email_sofia = $('.email-sofia'),
+
+        email_dzienis = $('.email-dzienis'),
+        email_kupryjaniuk = $('.email-kupryjaniuk'),
+        email_lukasiewicz = $('.email-lukasiewicz'),
+        email_olszowiec = $('.email-olszowiec'),
+        email_wiernicka = $('.email-wiernicka'),
+
+        email_alfa = $('.email-alfa'),
+        email_karolinka = $('.email-karolinka'),
+        email_platan = $('.email-platan'),
+        email_pogoria = $('.email-pogoria'),
+        email_fmpt = $('.email-fmpt'),
+        email_fmzg = $('.email-fmzg'),
+        email_tomaszow = $('.email-tomaszow'),
+        email_wolomin = $('.email-wolomin');
 
       var ai_news = $('#ai_news'),
         ai_promotions = $('input#ai_promotions'),
@@ -40,64 +52,89 @@ var $ = jQuery.noConflict(),
       for (var i = 0; i < ai_category.length; i++) {
         ai_category[i].disabled = true;
       }
-      ai_news[0].disabled = true;
 
-      // set email to
-      $('input[name=ai_object]').on('change', function(e) {
-        var val = $(this).val();
+      // ai_news[0].disabled = true;
+
+      // setEmail
+      function setEmails(el) {
+        var val = el.val();
+        // console.log(val);
         var list = $("input[name='ai_object']:checked").map(function() {
           return this.value;
         }).get();
 
-        // sofia.prop('checked', true);
-        // maciek.prop('checked', true);
+        // email_sofia.prop('checked', true);
+        // email_maciek.prop('checked', true);
+
+        if ((list.indexOf("Alfa Centrum") != -1) || (list.indexOf("Galeria Wołomin") != -1)) {
+          email_kupryjaniuk.prop('checked', true);
+        } else {
+          email_kupryjaniuk.prop('checked', false);
+        }
+
+        if ((list.indexOf("Focus Mall Piotrków Trybunalski") != -1) || (list.indexOf("Galeria Tomaszów") != -1)) {
+          email_wiernicka.prop('checked', true);
+        } else {
+          email_wiernicka.prop('checked', false);
+        }
+
+        if ((list.indexOf("CH Platan") != -1) || (list.indexOf("CH Pogoria") != -1)) {
+          email_olszowiec.prop('checked', true);
+        } else {
+          email_olszowiec.prop('checked', false);
+        }
 
         if (list.indexOf("Alfa Centrum") != -1) {
-          alfa.prop('checked', true);
+          email_alfa.prop('checked', true);
+          email_dzienis.prop('checked', true);
         } else {
-          alfa.prop('checked', false);
-        }
-
-        if (list.indexOf("CH Karolinka") != -1) {
-          karolinka.prop('checked', true);
-        } else {
-          karolinka.prop('checked', false);
-        }
-
-        if (list.indexOf("CH Platan") != -1) {
-          platan.prop('checked', true);
-        } else {
-          platan.prop('checked', false);
-        }
-
-        if (list.indexOf("CH Pogoria") != -1) {
-          pogoria.prop('checked', true);
-        } else {
-          pogoria.prop('checked', false);
+          email_alfa.prop('checked', false);
+          email_dzienis.prop('checked', false);
         }
 
         if (list.indexOf("Focus Mall Piotrków Trybunalski") != -1) {
-          fmpt.prop('checked', true);
+          email_fmpt.prop('checked', true);
         } else {
-          fmpt.prop('checked', false);
+          email_fmpt.prop('checked', false);
         }
 
         if (list.indexOf("Focus Mall Zielona Góra") != -1) {
-          fmzg.prop('checked', true);
+          email_fmzg.prop('checked', true);
+          email_lukasiewicz.prop('checked', true);
         } else {
-          fmzg.prop('checked', false);
+          email_fmzg.prop('checked', false);
+          email_lukasiewicz.prop('checked', false);
+        }
+
+        if (list.indexOf("CH Karolinka") != -1) {
+          email_karolinka.prop('checked', true);
+        } else {
+          email_karolinka.prop('checked', false);
+        }
+
+        if (list.indexOf("CH Platan") != -1) {
+          email_platan.prop('checked', true);
+
+        } else {
+          email_platan.prop('checked', false);
+        }
+
+        if (list.indexOf("CH Pogoria") != -1) {
+          email_pogoria.prop('checked', true);
+        } else {
+          email_pogoria.prop('checked', false);
         }
 
         if (list.indexOf("Galeria Tomaszów") != -1) {
-          tomaszow.prop('checked', true);
+          email_tomaszow.prop('checked', true);
         } else {
-          tomaszow.prop('checked', false);
+          email_tomaszow.prop('checked', false);
         }
 
         if (list.indexOf("Galeria Wołomin") != -1) {
-          wolomin.prop('checked', true);
+          email_wolomin.prop('checked', true);
         } else {
-          wolomin.prop('checked', false);
+          email_wolomin.prop('checked', false);
         }
 
         var emailList = $("input[name='ai_sendTo']:checked").map(function() {
@@ -106,11 +143,10 @@ var $ = jQuery.noConflict(),
 
         mailToList = emailList;
         // console.log(mailToList);
-      });
+      };
 
-      // additional field
-      $('input[name=ai_object]').on('change', function(e) {
-        var val = $(this).val();
+      // setCategories
+      function setCategories() {
         var list = $("input[name='ai_object']:checked").map(function() {
           return this.value;
         }).get();
@@ -120,8 +156,10 @@ var $ = jQuery.noConflict(),
         }
 
         if (list.indexOf("Galeria Wołomin") != -1 || list.indexOf("Galeria Tomaszów") != -1) {
+          lead.find('.form-control').removeClass('ignore');
           lead.slideDown('fast');
         } else {
+          lead.find('.form-control').addClass('ignore');
           lead.slideUp('fast');
         }
 
@@ -170,7 +208,8 @@ var $ = jQuery.noConflict(),
         if (
           list.indexOf("CH Karolinka") != -1 ||
           list.indexOf("CH Platan") != -1 ||
-          list.indexOf("CH Pogoria") != -1
+          list.indexOf("CH Pogoria") != -1 ||
+          list.indexOf("Focus Mall Zielona Góra") != -1
         ) {
           ai_recruitment[0].disabled = false;
         }
@@ -186,6 +225,81 @@ var $ = jQuery.noConflict(),
         }
 
         objectList = list;
+      };
+
+      // function setExtraRules() {
+      //   setTimeout(function() {
+      //     if (isRecruitment == true) {
+      //       console.log("active");
+      //       $("input#ai_upload").rules('add', {
+      //         required: true,
+      //         maxfilesize: 3,
+      //         extension: "pdf",
+      //         messages: {
+      //           required: "Załącz plik PDF z ogłoszeniem",
+      //           maxfilesize: "Maksymalna waga pliku wynosi 3 MB",
+      //           extension: "Dozwolony jest tylko 1 plik w formacie PDF"
+      //         }
+      //       });
+      //     } else if (isRecruitment == false) {
+      //       console.log("disabled");
+      //       // $("input#ai_upload").rules('add', {
+      //       //   required: true,
+      //       //   minmaxupload: [1, 2],
+      //       //   maxfilesize: 3,
+      //       //   extension: "jpg|jpeg|png",
+      //       //   mindimensions: [800, 800],
+      //       //   messages: {
+      //       //     required: "Załącz pliki graficzne",
+      //       //     maxfilesize: "Maksymalna waga jednego pliku wynosi 3 MB",
+      //       //     extension: "Dozwolone są tylko pliki w formacie JPG/JPEG lub PNG"
+      //       //   }
+      //       // });
+      //     }
+      //   }, 0);
+      // };
+      // setExtraRules();
+
+      // checkRecruitment
+      function checkRecruitment() {
+        var objList = $("input[name='ai_object']:checked").map(function() {
+          return this.value;
+        }).get();
+        if (objList.indexOf("Focus Mall Zielona Góra") != -1) {
+          if ($("input#ai_recruitment").prop("checked") == true) {
+            title.find("label").first().html('Nazwa oferty pracy');
+            content.find('.form-control').addClass('ignore');
+            content.slideUp('fast');
+            upload.find('input').addClass('ignore');
+            upload.slideUp('fast');
+            pdf.find('input').removeClass('ignore');
+            pdf.slideDown('fast');
+            isRecruitment = true;
+            console.log("isRecruitment " + isRecruitment);
+          } else {
+            title.find("label").first().html('Tytuł wpisu');
+            content.find('.form-control').removeClass('ignore');
+            content.slideDown('fast');
+            upload.find('input').removeClass('ignore');
+            upload.slideDown('fast');
+            pdf.find('input').addClass('ignore');
+            pdf.slideUp('fast');
+            isRecruitment = false;
+            console.log("isRecruitment " + isRecruitment);
+          }
+        }
+      }
+
+      $('input[name=ai_object]').on('change', function(e) {
+        setEmails($(this));
+        setCategories();
+        // setExtraRules();
+        checkRecruitment();
+      });
+
+      $('input[name=ai_category]').on('change', function(e) {
+        // setExtraRules();
+        checkRecruitment();
       });
 
       // upload files
@@ -200,7 +314,6 @@ var $ = jQuery.noConflict(),
           var i = 0;
           var imgW = [];
           var imgH = [];
-
           for (let file of files) {
             var reader = new FileReader();
             reader.onload = function(e) {
@@ -289,7 +402,11 @@ var $ = jQuery.noConflict(),
         var imageWidth = $(element).data('imageWidth');
         var imageHeight = $(element).data('imageHeight');
 
-        // 800x500
+        if (isRecruitment == true) {
+          return true;
+        }
+
+        // 800x500px
         if ((objectList.length == 2 && objectList.indexOf("Galeria Wołomin") != -1 && objectList.indexOf("Galeria Tomaszów") != -1) ||
           ((objectList.length == 1 && (objectList.indexOf("Galeria Wołomin") != -1 || objectList.indexOf("Galeria Tomaszów") != -1)))) {
           console.log('is800x500');
@@ -318,7 +435,7 @@ var $ = jQuery.noConflict(),
         var imageWidth = $(element).data('imageWidth');
         var imageHeight = $(element).data('imageHeight');
 
-        // 800x500
+        // 800x500px
         if ((objectList.length == 2 && objectList.indexOf("Galeria Wołomin") != -1 && objectList.indexOf("Galeria Tomaszów") != -1) ||
           ((objectList.length == 1 && (objectList.indexOf("Galeria Wołomin") != -1 || objectList.indexOf("Galeria Tomaszów") != -1)))) {
           return "Format obrazu musi wynosić 800x500px";
@@ -358,6 +475,22 @@ var $ = jQuery.noConflict(),
         }
       });
 
+      $.validator.addMethod('titlelength', function(value, element, param) {
+        var len = element.value.length;
+        return (len > param[0] && len < param[1]);
+      }, function(param, element) {
+        var len = element.value.length;
+        if (len < param[0] && isRecruitment == false) {
+          return "Tytuł wpisu musi zawierać co najmniej 10 znaków";
+        } else if (len > param[1] && isRecruitment == false) {
+          return "Tytuł wpisu nie może przekraczać 100 znaków";
+        } else if (len < param[0] && isRecruitment == true) {
+          return "Nazwa oferty musi zawierać co najmniej 10 znaków";
+        } else if (len > param[1] && isRecruitment == true) {
+          return "Nazwa oferty nie może przekraczać 100 znaków";
+        }
+      });
+
       form.validate({
         ignore: ".ignore",
         rules: {
@@ -376,15 +509,14 @@ var $ = jQuery.noConflict(),
             required: true,
             email: true
           },
-          ai_title: {
-            required: true,
-            minlength: 10,
-            maxlength: 100
-          },
           ai_lead: {
-            required: false,
+            required: true,
             minlength: 40,
             maxlength: 150
+          },
+          ai_title: {
+            required: true,
+            titlelength: [10, 100]
           },
           ai_content: {
             required: true,
@@ -393,13 +525,15 @@ var $ = jQuery.noConflict(),
           },
           ai_upload: {
             required: true,
-            // minupload: 1,
-            // maxupload: 3,
             minmaxupload: [1, 2],
             maxfilesize: 3,
             extension: "jpg|jpeg|png",
-            mindimensions: [800, 800],
-            // checkSquare: true
+            mindimensions: [800, 800]
+          },
+          ai_uploadPdf: {
+            required: true,
+            maxfilesize: 3,
+            extension: "pdf"
           },
           hiddenRecaptcha: {
             required: function() {
@@ -427,28 +561,30 @@ var $ = jQuery.noConflict(),
             required: "Podaj swój adres e-mail do kontaktu z nami",
             email: "Podaj prawidłowy adres e-mail"
           },
-          "ai_title": {
-            required: "Podaj tytuł wpisu, zachęcający do jego przeczytania",
-            minlength: "Tytuł musi zawierać co najmniej 15 znaków",
-            maxlength: "Tytuł nie może przekraczać 100 znaków"
-          },
           "ai_lead": {
             required: "Podaj zajawkę/lead wpisu",
             minlength: "Treść zajawki musi zawierać co najmniej 40 znaków",
             maxlength: "Treść zajawki nie może przekraczać 150 znaków"
           },
+          "ai_title": {
+            required: "Podaj tytuł lub nazwę, która zachęci do przeczytania",
+            minlength: "Tytuł lub nazwa musi zawierać co najmniej 10 znaków",
+            maxlength: "Tytuł lub nazwa nie może przekraczać 100 znaków"
+          },
           "ai_content": {
-            required: "Podaj treść wpisu",
-            minlength: "Treść wpisu musi zawierać co najmniej 100 znaków",
-            maxlength: "Treść wpisu nie może przekraczać 1500 znaków"
+            required: "Wpisz treść wpisu",
+            minlength: "Treść musi zawierać co najmniej 100 znaków",
+            maxlength: "Treść nie może przekraczać 1500 znaków"
           },
           "ai_upload": {
             required: "Załącz pliki graficzne",
-            // minupload: "Załącz co najmniej jeden plik graficzny",
-            // maxupload: "Możesz załączyć maksymalnie 3 pliki graficzne",
-            // minmaxupload: "Załącz 1 plik graficzny",
             maxfilesize: "Maksymalna waga jednego pliku wynosi 3 MB",
             extension: "Dozwolone są tylko pliki w formacie jpg/jpeg lub png"
+          },
+          "ai_uploadPdf": {
+            required: "Załącz plik pdf z ogłoszeniem",
+            maxfilesize: "Maksymalna waga pliku wynosi 3 MB",
+            extension: "Dozwolony jest tylko plik w formacie pdf"
           },
           "hiddenRecaptcha": {
             required: "Potwierdź, że nie jesteś robotem."
@@ -473,8 +609,8 @@ var $ = jQuery.noConflict(),
       $('body').on('click', '#ai-submit', function(e) {
         e.preventDefault();
 
-        console.log(mailToList.join(", "));
-        console.log(mailToList);
+        console.dir(mailToList);
+        // console.log(mailToList.join(", "));
         // console.log("isSofia: " + sofia[0].checked);
         // console.log($('input[type="file"]')[0].files);
 
@@ -492,12 +628,16 @@ var $ = jQuery.noConflict(),
         if (form.valid()) {
           var fd = new FormData();
           var fileData = document.getElementById('ai_upload');
+          var pdfData = document.getElementById('ai_uploadPdf');
           for (var i = 0; i < fileData.files.length; i++) {
             // console.log(fileData.files[i].name);
             fd.append('ai_upload[]', fileData.files[i], fileData.files[i].name);
           }
+          for (var i = 0; i < pdfData.files.length; i++) {
+            fd.append('ai_uploadPdf[]', pdfData.files[i], pdfData.files[i].name);
+          }
           fd.append('ai_object', objectList.join(", "));
-          fd.append('ai_category', $('input[name=ai_category]').val());
+          fd.append('ai_category', $('input[name=ai_category]:checked').val());
           fd.append('ai_name', $('input[name=ai_name]').val());
           fd.append('ai_email', $('input[name=ai_email]').val());
           fd.append('ai_title', $('input[name=ai_title]').val());

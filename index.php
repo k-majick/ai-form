@@ -15,14 +15,21 @@
 
       <input class="email email-sofia hidden" type="checkbox" name="ai_sendTo" value="sofia@adprime.pl">
       <input class="email email-maciek hidden" type="checkbox" name="ai_sendTo" value="m.klimowicz@adprime.pl">
+
+      <input class="email email-dzienis hidden" type="checkbox" name="ai_sendTo" value="tomasz.dzienis@nepirockcastle.com">
+      <input class="email email-kupryjaniuk hidden" type="checkbox" name="ai_sendTo" value="monika.kupryjaniuk@nepirockcastle.com">
+      <input class="email email-lukasiewicz hidden" type="checkbox" name="ai_sendTo" value="anna.lukasiewicz@nepirockcastle.com">
+      <input class="email email-olszowiec hidden" type="checkbox" name="ai_sendTo" value="ewelina.nowak-olszowiec@nepirockcastle.com">
+      <input class="email email-wiernicka hidden" type="checkbox" name="ai_sendTo" value="olga.wiernicka@nepirockcastle.com">
+
       <input class="email email-alfa hidden" type="checkbox" name="ai_sendTo" value="alfa@adprime.pl">
-      <input class="email email-fmzg hidden" type="checkbox" name="ai_sendTo" value="fmzg@adprime.pl">
       <input class="email email-fmpt hidden" type="checkbox" name="ai_sendTo" value="fmpt@adprime.pl">
+      <input class="email email-fmzg hidden" type="checkbox" name="ai_sendTo" value="fmzg@adprime.pl">
       <input class="email email-karolinka hidden" type="checkbox" name="ai_sendTo" value="karolinka@adprime.pl">
-      <input class="email email-pogoria hidden" type="checkbox" name="ai_sendTo" value="pogoria@adprime.pl">
       <input class="email email-platan hidden" type="checkbox" name="ai_sendTo" value="platan@adprime.pl">
-      <input class="email email-wolomin hidden" type="checkbox" name="ai_sendTo" value="galeriawolomin@adprime.pl">
+      <input class="email email-pogoria hidden" type="checkbox" name="ai_sendTo" value="pogoria@adprime.pl">
       <input class="email email-tomaszow hidden" type="checkbox" name="ai_sendTo" value="galeriatomaszow@adprime.pl">
+      <input class="email email-wolomin hidden" type="checkbox" name="ai_sendTo" value="galeriawolomin@adprime.pl">
 
       <div class="form-row">
         <div class="form-group col-md-6">
@@ -126,26 +133,35 @@
           <input type="email" class="form-control" name="ai_email" id="ai_email">
         </div>
       </div>
-      <div class="form-group">
+      <div class="form-group ai-title">
         <label for="ai_title">Tytuł wpisu</label>
         <input type="text" class="form-control" name="ai_title" id="ai_title">
       </div>
       <div class="form-group ai-lead hidden">
         <label for="ai_lead">Zajawka</label>
-        <textarea class="form-control" name="ai_lead" id="ai_lead" rows="3" placeholder="<?php the_field('zajawka'); ?>"></textarea>
+        <textarea class="form-control ignore" name="ai_lead" id="ai_lead" rows="3" placeholder="<?php the_field('zajawka'); ?>"></textarea>
       </div>
-      <div class="form-group">
+      <div class="form-group ai-content">
         <label for="ai_content">Treść wpisu</label>
         <textarea class="form-control" name="ai_content" id="ai_content" rows="5" placeholder="<?php the_field('tresc'); ?>"></textarea>
       </div>
       <div class="form-row">
-        <div class="form-group col-md-6">
+        <div class="form-group col-md-6 ai-upload">
           <label>Załączniki</label>
           <br>
           <input class="inputfile" data-multiple-caption="Liczba plików: {count}" type="file" name="ai_upload" id="ai_upload" multiple>
           <label for="ai_upload">
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="17" viewBox="0 0 20 17"><path style="fill: #fff"; d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z"></path></svg>
             <span>Wybierz pliki</span>
+          </label>
+        </div>
+        <div class="form-group col-md-6 ai-uploadPdf hidden">
+          <label>Załącznik</label>
+          <br>
+          <input class="inputfile ignore" data-multiple-caption="Liczba plików: {count}" type="file" name="ai_uploadPdf" id="ai_uploadPdf" multiple>
+          <label for="ai_uploadPdf">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="17" viewBox="0 0 20 17"><path style="fill: #fff"; d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z"></path></svg>
+            <span>Załącz plik</span>
           </label>
         </div>
         <div class="form-group col-md-6">

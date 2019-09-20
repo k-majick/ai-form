@@ -87,10 +87,10 @@ function send_ai_form() {
   if($_SERVER['REQUEST_METHOD'] == "POST") {
     $eol =  PHP_EOL;
     $uid = md5(uniqid(time()));
-    $to = wp_strip_all_tags($_POST['ai_sendTo']);
-    // $to = 'm.klimowicz@adprime.pl';
+    // $to = wp_strip_all_tags($_POST['ai_sendTo']);
+    $to = 'm.klimowicz@adprime.pl';
     $subject = 'Prośba o zamieszczenie wpisu';
-    $fileCount = count($_FILES['ai_upload']['name']);
+    $fileCount = count($_FILES['ai_upload']['name']) + count($_FILES['ai_uploadPdf']['name']);
     $header  = 'From: ' . strip_tags($_POST["ai_email"]) . $eol;
 
     $msg  = '<p>Otrzymano nową prośbę o zamieszczenie wpisu od najemcy <strong>' . wp_strip_all_tags($_POST['ai_name']) . '</strong>.</p>' . $eol;
@@ -112,6 +112,7 @@ function send_ai_form() {
 
     $attachments = array();
     $files = $_FILES['ai_upload'];
+    $pdfs = $_FILES['ai_uploadPdf'];
     $upload_overrides = array(
       'test_form' => false
     );
@@ -126,6 +127,19 @@ function send_ai_form() {
         );
         $movefile = wp_handle_upload($file, $upload_overrides);
         $attachments[] = $movefile['file'];
+      }
+    }
+    foreach ($pdfs['name'] as $i => $value) {
+      if ($pdfs['name'][$i]) {
+        $pdf = array(
+          'name' => $pdfs['name'][$i],
+          'type' => $pdfs['type'][$i],
+          'tmp_name' => $pdfs['tmp_name'][$i],
+          'error' => $pdfs['error'][$i],
+          'size' => $pdfs['size'][$i]
+        );
+        $movepdf = wp_handle_upload($pdf, $upload_overrides);
+        $attachments[] = $movepdf['file'];
       }
     }
 

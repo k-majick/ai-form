@@ -5,7 +5,7 @@ const CleanWebpackPlugin = require('clean-webpack-plugin');
 const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
 const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 const CopyWebpackPlugin = require('copy-webpack-plugin');
-const myPath = '../wordpress/wp-content/themes/ai-form-dist/';
+const myPath = '../../../../Applications/MAMP/htdocs/wp-content/themes/ai-form-dist/';
 
 module.exports = {
   entry: {
