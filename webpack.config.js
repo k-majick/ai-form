@@ -11,7 +11,7 @@ module.exports = {
   entry: {
     main: './assets/index.js',
     manager: './assets/js/manager.js',
-    raport: './assets/js/raport.js',
+    raport: './assets/js/raport.js'
   },
   output: {
     path: path.resolve(__dirname, myPath + 'assets/'),

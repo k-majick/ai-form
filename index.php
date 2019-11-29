@@ -13,14 +13,14 @@
 
     <form id="ai-form" method="post" enctype="multipart/form-data">
 
-      <input class="email email-sofia hidden" type="checkbox" name="ai_sendTo" value="sofia@adprime.pl">
+      <input class="email email-sofia hidden" type="checkbox" data-type="bcc" name="ai_sendTo" value="sofia@adprime.pl">
       <input class="email email-maciek hidden" type="checkbox" name="ai_sendTo" value="m.klimowicz@adprime.pl">
 
-      <input class="email email-dzienis hidden" type="checkbox" name="ai_sendTo" value="tomasz.dzienis@nepirockcastle.com">
-      <input class="email email-kupryjaniuk hidden" type="checkbox" name="ai_sendTo" value="monika.kupryjaniuk@nepirockcastle.com">
-      <input class="email email-lukasiewicz hidden" type="checkbox" name="ai_sendTo" value="anna.lukasiewicz@nepirockcastle.com">
-      <input class="email email-olszowiec hidden" type="checkbox" name="ai_sendTo" value="ewelina.nowak-olszowiec@nepirockcastle.com">
-      <input class="email email-wiernicka hidden" type="checkbox" name="ai_sendTo" value="olga.wiernicka@nepirockcastle.com">
+      <input class="email email-dzienis hidden" type="checkbox" data-type="bcc" name="ai_sendTo" value="tomasz.dzienis@nepirockcastle.com">
+      <input class="email email-kupryjaniuk hidden" type="checkbox" data-type="bcc" name="ai_sendTo" value="monika.kupryjaniuk@nepirockcastle.com">
+      <input class="email email-lukasiewicz hidden" type="checkbox" data-type="bcc" name="ai_sendTo" value="anna.lukasiewicz@nepirockcastle.com">
+      <input class="email email-olszowiec hidden" type="checkbox" data-type="bcc" name="ai_sendTo" value="ewelina.nowak-olszowiec@nepirockcastle.com">
+      <input class="email email-wiernicka hidden" type="checkbox" data-type="bcc" name="ai_sendTo" value="olga.wiernicka@nepirockcastle.com">
 
       <input class="email email-alfa hidden" type="checkbox" name="ai_sendTo" value="alfa@adprime.pl">
       <input class="email email-fmpt hidden" type="checkbox" name="ai_sendTo" value="fmpt@adprime.pl">
@@ -35,9 +35,9 @@
         <div class="form-group col-md-6">
           <label for="ai_object">Centrum handlowe</label><br>
           <div class="form-check">
-            <input class="form-check-input" type="checkbox" name="ai_object" id="ai_alfa" value="Alfa Centrum">
+            <input class="form-check-input" type="checkbox" name="ai_object" id="ai_alfa" value="Alfa Centrum Białystok">
             <label class="form-check-label" for="ai_alfa">
-              Alfa Centrum
+              Alfa Centrum Białystok (tylko FB)
             </label>
           </div>
           <div class="form-check">

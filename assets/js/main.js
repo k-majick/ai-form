@@ -21,8 +21,14 @@ var $ = jQuery.noConflict(),
         pdf = $('.ai-uploadPdf'),
         title = $('.ai-title'),
         isRecruitment = false,
+        isGwOrGt = false,
+        isGwAndGt = false,
+        is800x500 = false,
+        is600_1000 = false,
+        isBoth = false,
         objectList = [],
-        mailToList = [],
+        mailtoList = [],
+        bccList = [],
         email_maciek = $('.email-maciek'),
         email_sofia = $('.email-sofia'),
 
@@ -53,51 +59,37 @@ var $ = jQuery.noConflict(),
         ai_category[i].disabled = true;
       }
 
-      // ai_news[0].disabled = true;
-
-      // setEmail
       function setEmails(el) {
         var val = el.val();
-        // console.log(val);
         var list = $("input[name='ai_object']:checked").map(function() {
           return this.value;
         }).get();
 
-        // email_sofia.prop('checked', true);
-        // email_maciek.prop('checked', true);
-
-        if ((list.indexOf("Alfa Centrum") != -1) || (list.indexOf("Galeria Wołomin") != -1)) {
+        if ((list.indexOf("Alfa Centrum Białystok") != -1) || (list.indexOf("Galeria Wołomin") != -1)) {
           email_kupryjaniuk.prop('checked', true);
         } else {
           email_kupryjaniuk.prop('checked', false);
         }
-
+        if (list.indexOf("Alfa Centrum Białystok") != -1) {
+          email_alfa.prop('checked', true);
+        } else {
+          email_alfa.prop('checked', false);
+        }
         if ((list.indexOf("Focus Mall Piotrków Trybunalski") != -1) || (list.indexOf("Galeria Tomaszów") != -1)) {
           email_wiernicka.prop('checked', true);
         } else {
           email_wiernicka.prop('checked', false);
         }
-
         if ((list.indexOf("CH Platan") != -1) || (list.indexOf("CH Pogoria") != -1)) {
           email_olszowiec.prop('checked', true);
         } else {
           email_olszowiec.prop('checked', false);
         }
-
-        if (list.indexOf("Alfa Centrum") != -1) {
-          email_alfa.prop('checked', true);
-          email_dzienis.prop('checked', true);
-        } else {
-          email_alfa.prop('checked', false);
-          email_dzienis.prop('checked', false);
-        }
-
         if (list.indexOf("Focus Mall Piotrków Trybunalski") != -1) {
           email_fmpt.prop('checked', true);
         } else {
           email_fmpt.prop('checked', false);
         }
-
         if (list.indexOf("Focus Mall Zielona Góra") != -1) {
           email_fmzg.prop('checked', true);
           email_lukasiewicz.prop('checked', true);
@@ -105,56 +97,52 @@ var $ = jQuery.noConflict(),
           email_fmzg.prop('checked', false);
           email_lukasiewicz.prop('checked', false);
         }
-
         if (list.indexOf("CH Karolinka") != -1) {
           email_karolinka.prop('checked', true);
         } else {
           email_karolinka.prop('checked', false);
         }
-
         if (list.indexOf("CH Platan") != -1) {
           email_platan.prop('checked', true);
-
         } else {
           email_platan.prop('checked', false);
         }
-
         if (list.indexOf("CH Pogoria") != -1) {
           email_pogoria.prop('checked', true);
         } else {
           email_pogoria.prop('checked', false);
         }
-
         if (list.indexOf("Galeria Tomaszów") != -1) {
           email_tomaszow.prop('checked', true);
         } else {
           email_tomaszow.prop('checked', false);
         }
-
         if (list.indexOf("Galeria Wołomin") != -1) {
           email_wolomin.prop('checked', true);
         } else {
           email_wolomin.prop('checked', false);
         }
-
         var emailList = $("input[name='ai_sendTo']:checked").map(function() {
-          return this.value;
+          return this;
         }).get();
 
-        mailToList = emailList;
-        // console.log(mailToList);
+        bccList = emailList
+          .filter(email => email.dataset.type == "bcc")
+          .map(email => email.value).join(', ');
+
+        mailtoList = emailList
+          .filter(email => email.dataset.type !== "bcc")
+          .map(email => email.value).join(', ');
+
       };
 
-      // setCategories
       function setCategories() {
         var list = $("input[name='ai_object']:checked").map(function() {
           return this.value;
         }).get();
-
         for (var i = 0; i < ai_category.length; i++) {
           ai_category[i].disabled = true;
         }
-
         if (list.indexOf("Galeria Wołomin") != -1 || list.indexOf("Galeria Tomaszów") != -1) {
           lead.find('.form-control').removeClass('ignore');
           lead.slideDown('fast');
@@ -162,9 +150,8 @@ var $ = jQuery.noConflict(),
           lead.find('.form-control').addClass('ignore');
           lead.slideUp('fast');
         }
-
         if (
-          list.indexOf("Alfa Centrum") != -1 ||
+          list.indexOf("Alfa Centrum Białystok") != -1 ||
           list.indexOf("Galeria Wołomin") != -1 ||
           list.indexOf("Galeria Tomaszów") != -1 ||
           list.indexOf("CH Karolinka") != -1 ||
@@ -175,7 +162,6 @@ var $ = jQuery.noConflict(),
         ) {
           ai_promotions[0].disabled = false;
         }
-
         if (
           list.indexOf("Galeria Tomaszów") != -1 ||
           list.indexOf("CH Karolinka") != -1 ||
@@ -186,7 +172,6 @@ var $ = jQuery.noConflict(),
         ) {
           ai_news[0].disabled = false;
         }
-
         if (
           list.indexOf("Focus Mall Piotrków Trybunalski") != -1 ||
           list.indexOf("Focus Mall Zielona Góra") != -1 ||
@@ -195,16 +180,14 @@ var $ = jQuery.noConflict(),
         ) {
           ai_products[0].disabled = false;
         }
-
         if (
-          list.indexOf("Alfa Centrum") != -1 ||
+          list.indexOf("Alfa Centrum Białystok") != -1 ||
           list.indexOf("CH Karolinka") != -1 ||
           list.indexOf("CH Platan") != -1 ||
           list.indexOf("CH Pogoria") != -1
         ) {
           ai_events[0].disabled = false;
         }
-
         if (
           list.indexOf("CH Karolinka") != -1 ||
           list.indexOf("CH Platan") != -1 ||
@@ -213,54 +196,17 @@ var $ = jQuery.noConflict(),
         ) {
           ai_recruitment[0].disabled = false;
         }
-
         if (
-          list.indexOf("Alfa Centrum") != -1
+          list.indexOf("Alfa Centrum Białystok") != -1
         ) {
           ai_slider[0].disabled = false;
         }
-
         for (var i = 0; i < ai_category.length; i++) {
           ai_category[i].checked = false;
         }
-
         objectList = list;
       };
 
-      // function setExtraRules() {
-      //   setTimeout(function() {
-      //     if (isRecruitment == true) {
-      //       console.log("active");
-      //       $("input#ai_upload").rules('add', {
-      //         required: true,
-      //         maxfilesize: 3,
-      //         extension: "pdf",
-      //         messages: {
-      //           required: "Załącz plik PDF z ogłoszeniem",
-      //           maxfilesize: "Maksymalna waga pliku wynosi 3 MB",
-      //           extension: "Dozwolony jest tylko 1 plik w formacie PDF"
-      //         }
-      //       });
-      //     } else if (isRecruitment == false) {
-      //       console.log("disabled");
-      //       // $("input#ai_upload").rules('add', {
-      //       //   required: true,
-      //       //   minmaxupload: [1, 2],
-      //       //   maxfilesize: 3,
-      //       //   extension: "jpg|jpeg|png",
-      //       //   mindimensions: [800, 800],
-      //       //   messages: {
-      //       //     required: "Załącz pliki graficzne",
-      //       //     maxfilesize: "Maksymalna waga jednego pliku wynosi 3 MB",
-      //       //     extension: "Dozwolone są tylko pliki w formacie JPG/JPEG lub PNG"
-      //       //   }
-      //       // });
-      //     }
-      //   }, 0);
-      // };
-      // setExtraRules();
-
-      // checkRecruitment
       function checkRecruitment() {
         var objList = $("input[name='ai_object']:checked").map(function() {
           return this.value;
@@ -290,15 +236,46 @@ var $ = jQuery.noConflict(),
         }
       }
 
+      function checkGwGt() {
+        if (objectList.indexOf("Galeria Wołomin") != -1 && objectList.indexOf("Galeria Tomaszów") != -1) {
+          isGwAndGt = true;
+          isGwOrGt = false;
+        } else if (objectList.indexOf("Galeria Wołomin") != -1 || objectList.indexOf("Galeria Tomaszów") != -1) {
+          isGwAndGt = false;
+          isGwOrGt = true;
+        } else {
+          isGwAndGt = false;
+          isGwOrGt = false;
+        }
+        // console.log("isGwOrGt:" + isGwOrGt + " isGWAndGw:" + isGwAndGt);
+      }
+
+      function checkFormat() {
+        if ((objectList.length == 2 && isGwAndGt == true) || (objectList.length == 1 && isGwOrGt == true)) {
+          is800x500 = true;
+          is600_1000 = false;
+          isBoth = false;
+        } else if (objectList.length > 1 && isGwOrGt == true) {
+          is800x500 = false;
+          is600_1000 = false;
+          isBoth = true;
+        } else if (isGwAndGt == false && isGwOrGt == false) {
+          is800x500 = false;
+          is600_1000 = true;
+          isBoth = false;
+        }
+        // console.log("is800x500:" + is800x500 + " is600_1000:" + is600_1000 + " isBoth:" + isBoth);
+      }
+
       $('input[name=ai_object]').on('change', function(e) {
         setEmails($(this));
         setCategories();
-        // setExtraRules();
         checkRecruitment();
+        checkGwGt();
+        checkFormat();
       });
 
       $('input[name=ai_category]').on('change', function(e) {
-        // setExtraRules();
         checkRecruitment();
       });
 
@@ -353,84 +330,72 @@ var $ = jQuery.noConflict(),
           });
       });
 
-      // $.validator.addMethod('minupload', function(value, element, param) {
-      //   var length = (element.files.length);
-      //   return this.optional(element) || length >= param;
-      // });
-
       $.validator.addMethod('minmaxupload', function(value, element, param) {
         var length = (element.files.length);
         if (objectList.length == 0) {
-          console.log('is0obj' + ' ' + objectList.length);
           return length == 99;
         }
-        if (objectList.length == 2 && objectList.indexOf("Galeria Wołomin") != -1 && objectList.indexOf("Galeria Tomaszów") != -1) {
-          return length == 1;
+        if ((objectList.length == 1) && isGwOrGt == true) {
+          return length >= 1 && length <= 5;
         }
-        if (objectList.length > 1 && (objectList.indexOf("Galeria Wołomin") != -1 || objectList.indexOf("Galeria Tomaszów") != -1)) {
-          return length == 2;
+        if ((objectList.length == 2) && isGwAndGt == true) {
+          return length >= 1 && length <= 5;
         }
-        if (objectList.length == 1 && (objectList.indexOf("Galeria Wołomin") != -1 || objectList.indexOf("Galeria Tomaszów") != -1)) {
-          return length == 1;
+        if ((objectList.length > 2) && (isGwOrGt == true || isGwAndGt == true)) {
+          return length >= 2 && length <= 5;
         }
-        return length == 1;
+        return (length >= 1 && length <= 5);
       }, function(param, element) {
+        var length = (element.files.length);
         if (objectList.length == 0) {
           return "Proszę wybrać galerie handlowe"
         }
-
-        if ((objectList.length == 1) && (objectList.indexOf("Galeria Wołomin") != -1 || objectList.indexOf("Galeria Tomaszów") != -1)) {
-          console.log("l=1, isGw || isGt");
+        if (length > 5) {
+          return "Można załączyć maksymalnie 5 obrazów";
+        }
+        if ((objectList.length == 1) && isGwOrGt == true) {
           return "Proszę załączyć 1 obraz";
         }
-
-        if ((objectList.length == 2) && (objectList.indexOf("Galeria Wołomin") != -1 && objectList.indexOf("Galeria Tomaszów") != -1)) {
-          console.log("l = 2, isGw && isGt");
+        if ((objectList.length == 2) && isGwAndGt == true) {
           return "Proszę załączyć 1 obraz";
         }
-
-        if ((objectList.length > 2) && (objectList.indexOf("Galeria Wołomin") != -1 || objectList.indexOf("Galeria Tomaszów") != -1)) {
-          console.log("l > 1, isGw || isGt");
+        if ((objectList.length > 2) && (isGwOrGt == true || isGwAndGt == true)) {
           return "Proszę załączyć 2 obrazy";
         }
-
-        console.log("else");
         return "Proszę załączyć 1 obraz";
       });
 
       $.validator.addMethod('mindimensions', function(value, element, param) {
-        var imageWidth = $(element).data('imageWidth');
-        var imageHeight = $(element).data('imageHeight');
+        var imageWidth = $(element).data('imageWidth'),
+          imageHeight = $(element).data('imageHeight'),
+          length = (element.files.length);
+        var is800x500ok = 0,
+          is600_1000ok = 0;
 
-        if (isRecruitment == true) {
+        if (length > 0) {
+          for (var i = 0; i < length; i++) {
+            // console.dir("w" + imageWidth[i] + " h" + imageHeight[i]);
+            if (imageWidth[i] == 800 && imageHeight[i] == 500) {
+              is800x500ok++;
+            }
+            if ((imageWidth[i] >= 600 && imageWidth[i] <= 1000) && (imageWidth[i] == imageHeight[i])) {
+              is600_1000ok++;
+            }
+          }
+        }
+        console.log("is800x500ok:" + is800x500ok + " is600_1000ok:" + is600_1000ok);
+
+        if (is800x500 == true && is800x500ok >= 1) {
           return true;
         }
-
-        // 800x500px
-        if ((objectList.length == 2 && objectList.indexOf("Galeria Wołomin") != -1 && objectList.indexOf("Galeria Tomaszów") != -1) ||
-          ((objectList.length == 1 && (objectList.indexOf("Galeria Wołomin") != -1 || objectList.indexOf("Galeria Tomaszów") != -1)))) {
-          console.log('is800x500');
-          console.log(imageWidth[0] + 'x' + imageHeight[0]);
-          console.log(imageWidth[0] == 800 && imageHeight[0] == 500);
-          return (imageWidth[0] == 800 && imageHeight[0] == 500);
+        if (is600_1000 == true && is600_1000ok >= 1) {
+          return true;
         }
-
-        // 600-1000px
-        if (objectList.indexOf("Galeria Wołomin") == -1 && objectList.indexOf("Galeria Tomaszów") == -1) {
-          console.log('is600x1000');
-          console.log((imageWidth[0] >= 600 && imageWidth[0] <= 1000) && (imageWidth[0] == imageHeight[0]));
-          return ((imageWidth[0] >= 600 && imageWidth[0] <= 1000) && (imageWidth[0] == imageHeight[0]));
+        if (isBoth == true && is800x500ok >= 1 && is600_1000ok >= 1) {
+          return true;
         }
+        return false;
 
-        // 800x500 & 600-1000px
-        if (objectList.length > 1 && (objectList.indexOf("Galeria Wołomin") != -1 || objectList.indexOf("Galeria Tomaszów") != -1)) {
-          if ((imageWidth[0] == 800 && imageHeight[0] == 500) && ((imageWidth[1] >= 600 && imageWidth[1] <= 1000) && (imageWidth[1] == imageHeight[1]))) {
-            return true;
-          }
-          if ((imageWidth[1] == 800 && imageHeight[1] == 500) && ((imageWidth[0] >= 600 && imageWidth[0] <= 1000) && (imageWidth[0] == imageHeight[0]))) {
-            return true;
-          }
-        }
       }, function(param, element) {
         var imageWidth = $(element).data('imageWidth');
         var imageHeight = $(element).data('imageHeight');
@@ -451,13 +416,6 @@ var $ = jQuery.noConflict(),
           return "Jeden z obrazów musi być kwadratem o boku wynoszącym od 600 do 1000px, a drugi musi posiadać format 800x500px"
         }
 
-      });
-
-      $.validator.addMethod('checkSquare', function(value, element, param) {
-        var imgH = $(element).data('imageHeight');
-        var imgW = $(element).data('imageWidth');
-        return ((imgH / imgW) != param) ? "Your image is not a square." :
-          "Selected file is an image.";
       });
 
       $.validator.addMethod('maxfilesize', function(value, element, param) {
@@ -609,8 +567,10 @@ var $ = jQuery.noConflict(),
       $('body').on('click', '#ai-submit', function(e) {
         e.preventDefault();
 
-        console.dir(mailToList);
-        // console.log(mailToList.join(", "));
+        // var myTo = "m.klimowicz@adprime.pl";
+        // var myBcc = "maciej.klimowicz@gmail.com";
+        console.log(mailtoList);
+        console.log(bccList);
         // console.log("isSofia: " + sofia[0].checked);
         // console.log($('input[type="file"]')[0].files);
 
@@ -645,7 +605,8 @@ var $ = jQuery.noConflict(),
           fd.append('ai_content', $('textarea[name=ai_content]').val());
           fd.append('ai_dateFrom', removeYear(dateFrom));
           fd.append('ai_dateTo', removeYear(dateTo));
-          fd.append('ai_sendTo', mailToList);
+          fd.append('ai_sendTo', mailtoList);
+          fd.append('ai_sendBcc', bccList);
           fd.append('action', 'send_ai_form');
           $.ajax({
             type: 'POST',

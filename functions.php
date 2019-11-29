@@ -87,11 +87,11 @@ function send_ai_form() {
   if($_SERVER['REQUEST_METHOD'] == "POST") {
     $eol =  PHP_EOL;
     $uid = md5(uniqid(time()));
-    // $to = wp_strip_all_tags($_POST['ai_sendTo']);
-    $to = 'm.klimowicz@adprime.pl';
+    $to = wp_strip_all_tags($_POST['ai_sendTo']);
     $subject = 'Prośba o zamieszczenie wpisu';
     $fileCount = count($_FILES['ai_upload']['name']) + count($_FILES['ai_uploadPdf']['name']);
-    $header  = 'From: ' . strip_tags($_POST["ai_email"]) . $eol;
+    $header = 'From: ' . wp_strip_all_tags($_POST["ai_email"]) . $eol;
+    $header .= 'Bcc: ' . wp_strip_all_tags($_POST["ai_sendBcc"]) . $eol;
 
     $msg  = '<p>Otrzymano nową prośbę o zamieszczenie wpisu od najemcy <strong>' . wp_strip_all_tags($_POST['ai_name']) . '</strong>.</p>' . $eol;
     $msg .= '<h4 style="display: inline;">Centrum handlowe:&nbsp;</h4>' . wp_strip_all_tags($_POST['ai_object']) . '<br>' . $eol;
